@@ -1,25 +1,38 @@
 return {
   "lervag/vimtex",
-  lazy = false, -- lazy-loading will disable inverse search
-  config = function()
-    vim.api.nvim_create_autocmd({ "FileType" }, {
-      group = vim.api.nvim_create_augroup("lazyvim_vimtex_conceal", { clear = true }),
-      pattern = { "bib", "tex" },
-      callback = function()
-        vim.wo.conceallevel = 0
-      end,
-    })
-    vim.g.vimtex_mappings_disable = { ["n"] = { "K" } } -- disable `K` as it conflicts with LSP hover
-    vim.g.vimtex_quickfix_method = vim.fn.executable("pplatex") == 1 and "pplatex" or "latexlog"
+  init = function()
+    -- Viewer settings
+    vim.g.vimtex_view_method = "general" -- For Wayland compatibility, avoid xdotool
+    vim.g.vimtex_general_viewer = "SumatraPDF" -- External PDF viewer for the Vimtex menu
+    -- Formatting settings
+    vim.g.vimtex_format_enabled = true -- Enable formatting with latexindent
+    vim.g.vimtex_format_program = "latexindent"
 
-    vim.g.vimtex_view_method = "skim" -- <== macos specific, you can use zathura or sumatra or something else.
-    vim.g.vimtex_view_skim_sync = 1
-    vim.g.vimtex_view_skim_activate = 1
-    vim.g.vimtex_view_skim_reading_bar = 1
+    -- Indentation settings
+    vim.g.vimtex_indent_enabled = false -- Disable auto-indent from Vimtex
+    vim.g.tex_indent_items = false -- Disable indent for enumerate
+    vim.g.tex_indent_brace = false -- Disable brace indent
 
-    vim.g.vimtex_compiler_latexmk = {
-      aux_dir = "./aux",
-      out_dir = "./out",
+    -- Compiler
+    vim.g.vimtex_compiler_pdflatex = {
+      executable = "pdflatex",
+      options = {
+        "-interaction=nonstopmode",
+        "-synctex=1",
+      },
     }
+
+    -- Suppression settings
+    vim.g.vimtex_quickfix_mode = 0 -- Suppress quickfix on save/build
+    vim.g.vimtex_log_ignore = { -- Suppress specific log messages
+      "Underfull",
+      "Overfull",
+      "specifier changed to",
+      "Token not allowed in a PDF string",
+    }
+
+    -- Other settings
+    vim.g.vimtex_mappings_enabled = false -- Disable default mappings
+    vim.g.tex_flavor = "latex" -- Set file type for TeX files
   end,
 }
