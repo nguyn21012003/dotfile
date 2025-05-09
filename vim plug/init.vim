@@ -17,6 +17,8 @@ Plug 'ray-x/sad.nvim'
 Plug 'arkav/lualine-lsp-progress'
 
 
+Plug 'm4xshen/hardtime.nvim'
+
 """""" Telescope """"""
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'andrew-george/telescope-themes'
@@ -155,11 +157,11 @@ sticky = true,
 toggler = {
   line = 'gcc',
   block = 'gbc',
-},
-opleader = {
-  line = 'gc',
-  block = 'gb',
-},
+  },
+  opleader = {
+    line = 'gc',
+    block = 'gb',
+    },
 })
 EOF
 
@@ -178,14 +180,14 @@ settings = {
       executable = "latexmk",
       args = { "-pdf", "-interaction=nonstopmode", "-synctex=1", "%f" },
       onSave = true
-    },
-    forwardSearch = {
-      executable = "SumatraPDF.exe",
-      args = { "%p" }
-    }
-    }
+      },
+      forwardSearch = {
+        executable = "SumatraPDF.exe",
+        args = { "%p" }
+      }
+      }
   },
-filetypes = { "tex", "bib" },
+  filetypes = { "tex", "bib" },
 })
 
 EOF
@@ -205,21 +207,21 @@ textobjects = {
       ["if"] = "@function.inner",
       ["ac"] = "@class.outer",
       ["ic"] = "@class.inner",
+      },
     },
-  },
-  move = {
-    enable = true,
-    set_jumps = true,
-    goto_next_start = {
-      ["]f"] = "@function.outer",
-      ["]c"] = "@class.outer",
+    move = {
+      enable = true,
+      set_jumps = true,
+      goto_next_start = {
+        ["]f"] = "@function.outer",
+        ["]c"] = "@class.outer",
+        },
+        goto_previous_start = {
+          ["[f"] = "@function.outer",
+          ["[c"] = "@class.outer",
+          },
+        },
     },
-    goto_previous_start = {
-      ["[f"] = "@function.outer",
-      ["[c"] = "@class.outer",
-    },
-  },
-},
 }
 EOF
 
@@ -233,7 +235,7 @@ sources = {
   null_ls.builtins.formatting.prettier.with({
   filetypes = {
     "javascript","typescript","css","scss","html","json","yaml","markdown","graphql","md","txt",
-  },
+    },
   })
   },
 })
@@ -274,14 +276,14 @@ pickers = {
   find_files = { 
     hidden = true,
     -- theme = "dropdown",
-  },
-  current_buffer_fuzzy_find = { 
-    -- theme = "dropdown" 
-  },
-},
-extensions = {
-  file_browser = { hijack_netrw = true }
-},
+    },
+    current_buffer_fuzzy_find = { 
+      -- theme = "dropdown" 
+      },
+    },
+    extensions = {
+      file_browser = { hijack_netrw = true }
+      },
 })
 
 telescope.load_extension('themes')
@@ -304,7 +306,7 @@ transparent = true,
 styles = {
   floats = "transparent", 
   sidebars = "transparent",
-},
+  },
 })
 vim.cmd[[colorscheme solarized-osaka]]
 vim.cmd [[
@@ -382,6 +384,15 @@ nnoremap <leader>fs :Telescope lsp_document_symbols<CR>
 nnoremap <leader>vf :Neoformat<CR>
 nnoremap <silent> <leader>e :lua require('telescope').extensions.file_browser.file_browser()<CR>
 noremap <A-z> :set wrap!<CR>
+
+lua << EOF
+require('hardtime').setup({
+disabled_filetypes = { "qf", "netrw", "NvimTree", "lazy", "mason", "oil" },
+max_count = 10,
+enabled = true,
+max_time = 500,
+})
+EOF
 
 "Bufferline
 set termguicolors
