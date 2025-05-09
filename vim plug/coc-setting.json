@@ -1,0 +1,10 @@
+{
+  "latex-workshop.view.pdf.viewer": "sumatra",
+  "latex-workshop.latex.autoBuild.run": "onFileChange",
+  "latex-workshop.latex.toolchain": [
+    {
+      "command": "pdflatex",
+      "args": ["-interaction=nonstopmode", "-synctex=1", "%f"]
+    }
+  ]
+}

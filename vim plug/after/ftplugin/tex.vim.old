@@ -1,0 +1,12 @@
+def ForwardSearch()
+  var filename_root = expand('%:p:r')
+  system($'SumatraPDF.exe -forward-search {filename_root}.tex {line(".")} {filename_root}.pdf')
+enddef
+
+nnoremap <buffer> <F2> <Scriptcmd>ForwardSearch()<cr>
+
+
+def g:BackwardSearch(line: number, filename: string)
+  exe $'buffer {bufnr(fnamemodify(filename, ':.'))}'
+  cursor(line, 1)
+enddef
