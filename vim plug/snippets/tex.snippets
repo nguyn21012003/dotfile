@@ -186,9 +186,21 @@ snippet up "Use Package" b
 # \begin{}...\end{}
 snippet begin "Begin End"
 	\begin{${1:env}}
-		${2:${VISUAL}}
+		${2:$}
 	\end{$1}${0}
 #
+
+snippet begeq "Begin End"
+	\begin{equation}
+		\begin{aligned}
+      ${1:$}
+    \end{aligned}
+	\end{equation}
+
+snippet begg "Begin gather"
+  \begin{gather}
+    ${1:$}  
+  \end{gather}
 
 # Align(ed)
 snippet align "Align Env" b
