@@ -114,7 +114,7 @@ local icon_sets = {
 	runes = {
 		"✠",
 		"⛧",
-		"𖤐",
+		"ᚴ",
 		"ᛟ",
 		"ᚨ",
 		"ᚱ",
@@ -133,7 +133,7 @@ local icon_sets = {
 	}, 
 	hearts = { "❤", "♥", "♡", "❦", "❧" }, -- Set of heart-shaped icons
 	waves = { "≈", "∿", "≋", "≀", "⌀", "≣", "⌇" }, -- Set of wave-like symbols
-	animal = { "🐱", "😸", "😹", "😺", "😻", "😼", "😽", "😾", "😿", "🙀" },
+	-- animal = { "🐱", "😸", "😹", "😺", "😻", "😼", "😽", "😾", "😿", "🙀" },
 	crosses = { "☨", "✟", "♰", "♱", "⛨", "" }, -- Set of cross-like symbols
 }
 
@@ -166,10 +166,8 @@ local function reverse_table(tbl)
 	return reversed
 end
 
--- Create a reversed list of icon sets
 local reversed_icon_sets = reverse_table(icon_sets_list)
 
--- Function to create a separator component based on side (left/right) and optional mode color
 local function create_separator(side, use_mode_color)
 	return {
 		function()
@@ -188,8 +186,6 @@ local function create_separator(side, use_mode_color)
 	}
 end
 
--- Function to create a mode-based component (e.g., statusline)
--- with optional content, icon, and colors
 local function create_mode_based_component(content, icon, color_fg, color_bg)
 	return {
 		content,
@@ -206,9 +202,7 @@ local function create_mode_based_component(content, icon, color_fg, color_bg)
 	}
 end
 
--- -- Function to get the current mode indicator as a single character
 local function mode()
-	-- Map of modes to their respective shorthand indicators
 	local mode_map = {
 		n = "N", -- Normal mode
 		i = "I", -- Insert mode
@@ -230,11 +224,9 @@ local function mode()
 		["!"] = "!", -- Shell mode
 		t = "T", -- Terminal mode
 	}
-	-- Return the mode shorthand or [UNKNOWN] if no match
 	return mode_map[vim.fn.mode()] or "[UNKNOWN]"
 end
 
--- Config
 local config = {
 	options = {
 		component_separators = "",
