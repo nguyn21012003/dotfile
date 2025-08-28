@@ -1,8 +1,5 @@
--- require('mini.animate').setup({
---   opts = function(_,opts)
---     opts.scroll = {
---       enable = false
---     }
---   end,
---   enable = false,
--- })
+local colorizer = require("colorizer")
+
+colorizer.setup({})
+
+

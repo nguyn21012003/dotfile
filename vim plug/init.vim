@@ -5,8 +5,8 @@ let g:python3_host_prog = 'C:\Users\Nguyen\AppData\Local\Programs\Python\Python3
 
 call plug#begin('~/.vim/plugged')
 Plug 'goolord/alpha-nvim'
+" Plug 'nvimdev/dashboard-nvim'
 Plug 'kdheepak/lazygit.nvim'
-Plug 'echasnovski/mini.animate'
 Plug 'sbdchd/neoformat'
 Plug 'gelguy/wilder.nvim'
 Plug 'folke/tokyonight.nvim'
@@ -39,10 +39,11 @@ Plug 'VonHeikemen/searchbox.nvim'
 Plug 'nvim-tree/nvim-web-devicons'
 Plug 'akinsho/bufferline.nvim', { 'tag': '*' }
 Plug 'echasnovski/mini.nvim'
-" Plug 'nvim-neo-tree/neo-tree.nvim', { 'branch': 'v2.x', 'do': ':UpdateRemotePlugins' }
+Plug 'echasnovski/mini.animate'
+Plug 'echasnovski/mini.misc'
 
 Plug 'nvim-lualine/lualine.nvim'
-Plug 'lukas-reineke/indent-blankline.nvim'
+" Plug 'lukas-reineke/indent-blankline.nvim'
 Plug 'numToStr/Comment.nvim'
 
 Plug 'lervag/vimtex'
@@ -57,6 +58,7 @@ Plug 'lervag/vimtex'
 Plug 'jiangmiao/auto-pairs'
 Plug 'windwp/nvim-autopairs'
 Plug 'kylechui/nvim-surround'
+Plug 'machakann/vim-sandwich'
 
 Plug 'MeanderingProgrammer/render-markdown.nvim'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && npx --yes yarn install' }
@@ -67,7 +69,7 @@ Plug 'HakonHarnes/img-clip.nvim'
 
 Plug 'epwalsh/pomo.nvim'
 Plug 'epwalsh/obsidian.nvim'
-
+Plug 'norcalli/nvim-colorizer.lua'
 Plug 'hrsh7th/nvim-cmp'
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'
@@ -78,25 +80,27 @@ Plug 'L3MON4D3/LuaSnip', {'tag': 'v2.*', 'do': 'make install_jsregexp'}
 Plug 'saadparwaiz1/cmp_luasnip'
 Plug 'neovim/nvim-lspconfig'
 Plug 'folke/trouble.nvim'
-Plug 'williamboman/mason.nvim'
-Plug 'williamboman/mason-lspconfig.nvim'
 
 
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 Plug 'nvimtools/none-ls.nvim'
-Plug 'NStefan002/screenkey.nvim'
-
-
-
-
+Plug 'folke/which-key.nvim'
+Plug 'mbbill/undotree'
+" Plug 'danymat/neogen'
+Plug 'kkoomen/vim-doge', { 'do': { -> doge#install() } }
+Plug 'andweeb/presence.nvim'
+Plug 'hat0uma/csvview.nvim'
+" Plug '3rd/image.nvim'
+Plug 'f-person/git-blame.nvim'
+" Plug 'Bekaboo/dropbar.nvim'
 
 call plug#end()
 
+lua require('dashboard-conf')
 lua require('cmp-config')
-lua require('ibl-config')
 lua require('lualine-config')
-lua require('alpha_conf')
+" lua require('evil-lualine-config')
 lua require('theme')
 lua require('editor')
 lua require('telescopes')
@@ -113,15 +117,19 @@ lua require('null')
 lua require('search')
 lua require('snippets-conf')
 lua require('keybindings')
-lua require('showkey')
 lua require('comment-conf')
 lua require('signature')
-"lua require('mason-conf')
+lua require('which')
+lua require('docstr')
+lua require('discord')
+lua require('mini-conf')
+lua require('csv-conf')
+lua require('blame')
+" lua require('drop')
 
-let g:wilder_popupmenu_border = 'rounded'
-let g:wilder_ctrl_p_remap = 1
-let g:deoplete#enable_at_startup = 1
 
+
+autocmd FileType json,jsonc setlocal conceallevel=0
 " latex configs
 let g:tex_flavor='latex'
 let g:vimtex_view_viewer_method = 'SumatraPDF'
@@ -129,9 +137,9 @@ let g:vimtex_view_viewer_method = 'SumatraPDF'
 let g:vimtex_quickfix_mode = 0
 
 let g:vimtex_quickfix_open_on_warning = 0
-set conceallevel=1
 
-let g:tex_conceal='abdmg'
+let g:tex_conceal="abdmgsc"
+set conceallevel=2
 let g:vimtex_complete_enabled = 0
 let g:vimtex_indent_enabled   = 0
 let g:vimtex_imaps_enabled    = 0
@@ -144,8 +152,6 @@ let g:vimtex_compiler_latexmk = {
       \ 'engine' : '-pdf',
       \ 'hooks' : [],
       \ 'options' : [
-      \   '-verbose',
-      \   '-file-line-error',
       \   '-synctex=1',
       \   '-interaction=nonstopmode',
       \ ],
@@ -173,6 +179,10 @@ command! TexCount !texcount.exe -inc -sum -total %
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:wilder_popupmenu_border = 'rounded'
+let g:wilder_ctrl_p_remap = 1
+let g:deoplete#enable_at_startup = 1
+
 let g:mkdp_auto_start = 0
 let g:mkdp_auto_close = 1
 let g:mkdp_theme = 'dark'
@@ -191,7 +201,8 @@ set mouse=
 set autoindent
 set smartindent
 set encoding=utf-8
-
+set nocompatible
+set belloff=all
 set tabstop=2
 set shiftwidth=2
 set softtabstop=2
@@ -220,4 +231,13 @@ let g:floaterm_shell = 'pwsh --noprofile --nologo'
 let g:lazygit_floating_window_use_plenary = 0 
 let g:lazygit_use_neovim_remote = 1 
 let g:lazygit_use_custom_config_file_path = 0 
+
+
+
+let g:copilot_enabled = 0
+
+let g:copilot_no_tab_map = v:true
+imap <silent><script><expr> <C-J> copilot#Accept("\<CR>")
+let g:copilot_assume_mapped = v:true
+let g:copilot_tab_fallback = ""
 

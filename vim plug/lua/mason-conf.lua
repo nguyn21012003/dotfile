@@ -1,29 +1,35 @@
--- require("mason").setup()
--- require("mason-lspconfig").setup()
+require("lspconfig").lua_ls.setup({
+  settings = {
+    Lua = {
+      telemetry = {
+        enable = false,
+      },
+    },
+  },
+  on_init = function(client)
+    local join = vim.fs.joinpath
+    local path = client.workspace_folders[1].name
 
-local lspconfig = require("lspconfig")
+    if vim.uv.fs_stat(join(path, ".luarc.json")) or vim.uv.fs_stat(join(path, ".luarc.jsonc")) then
+      return
+    end
 
-lspconfig.lua_ls.setup({
-	ft = { "lua" },
-	settings = {
-		Lua = {
-			runtime = {
-				version = "LuaJIT",
-			},
-			diagnostics = {
-				globals = { "vim" },
-			},
-			workspace = {
-				library = {
-					vim.env.VIMRUNTIME,
-					vim.fn.stdpath("config"),
-				},
-				checkThirdParty = false,
-				ignoreDir = { ".git", "node_modules", "build", "dist" },
-			},
-			telemetry = {
-				enable = false,
-			},
-		},
-	},
+    local nvim_settings = {
+      runtime = {
+        version = "LuaJIT",
+      },
+      diagnostics = {
+        globals = { "vim" },
+      },
+      workspace = {
+        checkThirdParty = false,
+        library = {
+          [vim.env.VIMRUNTIME] = true,
+          [vim.fn.stdpath("config") .. "/lua"] = true,
+        },
+      },
+    }
+
+    client.config.settings.Lua = vim.tbl_deep_extend("force", client.config.settings.Lua, nvim_settings)
+  end,
 })

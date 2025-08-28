@@ -1,10 +1,21 @@
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
-capabilities.hoverProvider = false
-capabilities.signatureHelpProvider = false
+capabilities.hoverProvider = true
+capabilities.signatureHelpProvider = true
+
 require("lspconfig").pyright.setup({
 	filetypes = { "python" },
 	capabilities = capabilities,
-	on_attach = function(client, bufnr) end,
+	on_attach = function(client, bufnr)
+		print("Pyright LSP attached")
+	end,
+	-- python = {
+	-- 	analysis = {
+	-- 		autoSearchPaths = true,
+	-- 		diagnosticMode = "openFilesOnly",
+	-- 		useLibraryCodeForTypes = true,
+	-- 		typeCheckingMode = "off",
+	-- 	},
+	-- },
 })
 require("lspconfig").fortls.setup({})
 
@@ -26,5 +37,4 @@ require("lspconfig").texlab.setup({
 })
 
 require("trouble").setup({})
--- vim.diagnostic.config({ virtual_lines = true })
 vim.diagnostic.config({ virtual_text = true })

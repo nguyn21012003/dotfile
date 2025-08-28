@@ -71,8 +71,8 @@ require("screenkey").setup({
 	},
 })
 
-vim.api.nvim_create_autocmd("VimEnter", {
-	callback = function()
-		pcall(require("screenkey").toggle)
-	end,
-})
+-- vim.api.nvim_create_autocmd("VimEnter", {
+-- 	callback = function()
+-- 		pcall(require("screenkey").toggle)
+-- 	end,
+-- })

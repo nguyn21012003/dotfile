@@ -1,5 +1,7 @@
 local themes_select = {
 	"tokyonight",
+	"tokyonight-moon",
+  "tokyonight-storm",
 	"solarized-osaka",
 	"catppuccin-mocha",
 	"catppuccin-macchiato",
@@ -101,7 +103,7 @@ require("themery").setup({
 })
 
 -- vim.cmd[[colorscheme solarized-osaka]]
-vim.cmd([[colorscheme solarized-osaka]])
+vim.cmd([[colorscheme tokyonight]])
 vim.cmd([[
   highlight TelescopeNormal guibg=NONE
   highlight TelescopeBorder guibg=NONE
